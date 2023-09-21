@@ -35,7 +35,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="container" style="margin-top: 50px;">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="text_align_center">
+
+                                <% if(!infollowers){ %>
+                              <a style="margin:20px auto;" class="read_more" href="/users/<%= user._id%>/follow?_method=PUT">FOLLOW</a>
+                              <% } else {%>
+                              <a style="margin:20px auto;" class="read_more" href="/users/<%= user._id%>/unfollow?_method=PUT">UNFOLLOW</a>
+                              <% } %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 
+
                     <div class="gallery">
                         <div class="container_with">
                             <div class="row">
@@ -71,6 +87,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
             <!-- end customers  -->

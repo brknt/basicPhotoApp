@@ -78,12 +78,14 @@ const createToken = (userId) => {
 
 const getDashboardPage = async (req, res) => {
     const photos = await Photo.find({ user: res.locals.user._id });
-    const user = await User.findById({ _id: res.locals.user._id });// TODO: populate eklenecek.
-    console.log(user);
+    const user = await User.findById({ _id: res.locals.user._id }).populate(
+        ['followers','followings']
+        );// TODO: populate eklenecek.
 
     res.render('dashboard', {
         page_name: 'dashboard',
-        photos
+        photos,
+        user
     });
 }
 
@@ -111,11 +113,17 @@ const getAllUsers = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         const user = await User.findById({ _id: req.params.id });
+        const infollowers = user.followers.some((follower)=>{
+            return follower.equals(res.locals.user._id);
+        });
+
         const photos = await Photo.find({ user: user._id });
+
         res.status(200).render('user', {
             user,
             photos,
-            page_name: 'users'
+            page_name: 'users',
+            infollowers
         });
 
     } catch (error) {
@@ -141,9 +149,10 @@ const follow = async (req, res) => {
 
         user = await User.findByIdAndUpdate(
             { _id: res.locals.user._id },
-            { $push: { following: req.params.id } },
+            { $push: { followings: req.params.id } },
             { new: true }
         );
+        res.status(200).redirect(`/users/${req.params.id}`);
 
 
     } catch (error) {
@@ -169,9 +178,11 @@ const unfollow = async (req, res) => {
 
         user = await User.findByIdAndUpdate(
             {_id:res.locals.user._id},
-            {$pull:{following:req.params.id}},
+            {$pull:{followings:req.params.id}},
             {new:true}
         );
+        res.status(200).redirect(`/users/${req.params.id}`);
+
         
 
     } catch (error) {

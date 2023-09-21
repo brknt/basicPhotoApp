@@ -6,6 +6,7 @@ const conn = require('./config/db.js');
 const cookieParser = require('cookie-parser');
 const cloudinary = require('cloudinary').v2;
 const fileUpload = require('express-fileupload');
+const methodOverride = require('method-override');
 
 
 const pageRoute = require('./routes/pageRoute.js');
@@ -24,11 +25,11 @@ const port = process.env.PORT || 3000;
 
 
 
-cloudinary.config({ 
-    cloud_name: process.env.CLOUD_NAME, 
-    api_key: process.env.CLOUD_API_KEY, 
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
     api_secret: process.env.CLOUD_API_SECRET
-  });
+});
 
 
 
@@ -48,8 +49,11 @@ app.use(bodyParser.urlencoded({ extended: true }));// form body içerisindeki ve
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(fileUpload({
-    useTempFiles : true
+    useTempFiles: true
 })); // geçici tmp klasörü oluşturmak için 'useTempFiles'
+app.use(methodOverride("_method",{
+    methods:['POST','GET']
+}));
 
 
 
