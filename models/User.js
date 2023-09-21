@@ -20,7 +20,19 @@ const UserSchema = new Schema({
         type: String,
         required: [true, 'Password area is required'],
         minLength:[6, 'At least for 6 characters']
-    }
+    },
+    followers:[
+        {
+            type:Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
+    following:[
+        {
+            type:Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 },
     {
         timestamps: true

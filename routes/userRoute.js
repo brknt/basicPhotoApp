@@ -9,6 +9,8 @@ router.post('/login', userController.loginUser);
 router.get('/dashboard', autheticateToken, userController.getDashboardPage);
 router.get('/', autheticateToken, userController.getAllUsers);
 router.get('/:id', autheticateToken, userController.getUser);
+router.put('/:id/follow', autheticateToken, userController.follow);
+router.put('/:id/unfollow', autheticateToken, userController.unfollow);
 
 
 module.exports = {

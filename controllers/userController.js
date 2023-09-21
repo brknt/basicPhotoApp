@@ -76,8 +76,11 @@ const createToken = (userId) => {
     });
 }
 
-const getDashboardPage = async(req, res) => {
-    const photos = await Photo.find({user:res.locals.user._id});
+const getDashboardPage = async (req, res) => {
+    const photos = await Photo.find({ user: res.locals.user._id });
+    const user = await User.findById({ _id: res.locals.user._id });// TODO: populate eklenecek.
+    console.log(user);
+
     res.render('dashboard', {
         page_name: 'dashboard',
         photos
@@ -122,10 +125,68 @@ const getUser = async (req, res) => {
         })
     }
 }
+
+
+
+const follow = async (req, res) => {
+    try {
+
+        let user = await User.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+                $push: { followers: res.locals.user._id }
+            },
+            { new: true }
+        );
+
+        user = await User.findByIdAndUpdate(
+            { _id: res.locals.user._id },
+            { $push: { following: req.params.id } },
+            { new: true }
+        );
+
+
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error
+        })
+    }
+}
+
+
+
+const unfollow = async (req, res) => {
+    try {
+
+        let user = await User.findByIdAndUpdate(
+            {_id:req.params.id},
+            {
+             $pull :{followers:res.locals.user._id}   
+            },
+            {new:true}
+        );
+
+        user = await User.findByIdAndUpdate(
+            {_id:res.locals.user._id},
+            {$pull:{following:req.params.id}},
+            {new:true}
+        );
+        
+
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error
+        })
+    }
+}
 module.exports = {
     createUser,
     loginUser,
     getDashboardPage,
     getAllUsers,
-    getUser
+    getUser,
+    follow,
+    unfollow
 }
