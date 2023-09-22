@@ -27,7 +27,7 @@ const createUser = async (req, res) => {
             });
 
         }
-        console.log(errors2);
+
         res.status(400).json(errors2)
     }
 }
@@ -117,7 +117,6 @@ const getAllUsers = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         const user = await User.findById({ _id: req.params.id });
-        console.log(user._id, "-----", res.locals.user._id);
 
         if (user._id.equals(res.locals.user._id)) {
             res.redirect('/users/dashboard');
