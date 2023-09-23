@@ -28,7 +28,7 @@ const createPhoto = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            succeded: false,
+            succeeded: false,
             error
         })
     }
@@ -48,7 +48,7 @@ const getAllPhotos = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            succeded: false,
+            succeeded: false,
             error
         });
     }
@@ -67,7 +67,7 @@ const getPhoto = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            succeded: false,
+            succeeded: false,
             error
         })
     }
@@ -89,7 +89,7 @@ const deletePhoto = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            succeded: false,
+            succeeded: false,
             error
         })
     }
@@ -128,7 +128,7 @@ const updatePhoto = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            succeded: false,
+            succeeded: false,
             error
         })
     }

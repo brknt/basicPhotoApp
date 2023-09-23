@@ -25,7 +25,7 @@ const checkUser = async (req, res, next) => {
 
     } catch (error) {
         res.status(401).json({
-            succeded: false,
+            succeeded: false,
             error
         });
     }
@@ -51,7 +51,7 @@ const autheticateToken = async (req, res, next) => {
 
     } catch (error) {
         res.status(401).json({
-            succeded: false,
+            succeeded: false,
             error: 'Not authorized'
         });
 

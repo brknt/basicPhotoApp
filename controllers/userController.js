@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
 
         } else {
             return res.status(401).json({
-                succeded: false,
+                succeeded: false,
                 error: "There is no such user. (Unauthorized)"
             });
         }
@@ -59,14 +59,14 @@ const loginUser = async (req, res) => {
             res.redirect('/users/dashboard');
         } else {
             res.status(401).json({
-                succeded: false,
+                succeeded: false,
                 error: 'Password is not valid.'
             })
         }
 
     } catch (error) {
         res.status(500).json({
-            succeded: false,
+            succeeded: false,
             error
         })
     }
@@ -107,7 +107,7 @@ const getAllUsers = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            succeded: false,
+            succeeded: false,
             error
         });
     }
@@ -137,7 +137,7 @@ const getUser = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            succeded: false,
+            succeeded: false,
             error
         })
     }
@@ -166,7 +166,7 @@ const follow = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            succeded: false,
+            succeeded: false,
             error
         })
     }
@@ -196,7 +196,7 @@ const unfollow = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            succeded: false,
+            succeeded: false,
             error
         })
     }

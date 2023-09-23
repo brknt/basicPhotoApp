@@ -5,10 +5,11 @@ const pageController = require('../controllers/pageController');
 
 router.get('/', pageController.getIndexPage);
 router.get('/about', pageController.getAboutPage);
-router.get('/contact', pageController.getContactPage);
 router.get('/register', pageController.getRegisterPage);
 router.get('/login', pageController.getLoginPage);
 router.get('/logout', pageController.getLogout);
+router.get('/contact', pageController.getContactPage);
+router.post('/contact', pageController.sendMail);
 
 
 module.exports = {
