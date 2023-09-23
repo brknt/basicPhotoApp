@@ -1,8 +1,19 @@
 const nodemailer = require('nodemailer');
+const Photo = require('../models/Photo');
+const User = require('../models/User');
 
-const getIndexPage = (req, res) => {
+
+const getIndexPage = async(req, res) => {
+  const photos = await Photo.find({}).sort({uploadedAt : -1}).limit(3);
+  
+  const numOfUser = await User.countDocuments({});
+  const numOfPhoto = await Photo.countDocuments({});
+
     res.render('index', {
-        page_name: 'home'
+        page_name: 'home',
+        photos,
+        numOfUser,
+        numOfPhoto
     });
 }
 const getAboutPage = (req, res) => {

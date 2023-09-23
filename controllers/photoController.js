@@ -13,7 +13,7 @@ const createPhoto = async (req, res) => {
             folder: 'basicPhoto_tr'
         },
     );
-    
+
     try {
         await Photo.create({
             name: req.body.name,
@@ -59,10 +59,18 @@ const getPhoto = async (req, res) => {
     try {
         const photo = await Photo.findById({ _id: req.params.id }).populate('user');
 
+        let isOwner = false;
+
+        if (res.locals.user) {
+            isOwner = photo.user.equals(res.locals.user._id);
+        }
+
+
         res.status(200).render('photo', {
             photo,
             page_name: 'photos',
-            user: res.locals.user
+            user: res.locals.user,
+            isOwner
         });
 
     } catch (error) {
@@ -117,13 +125,13 @@ const updatePhoto = async (req, res) => {
             fs.unlinkSync(req.files.image.tempFilePath);
 
         }
-            
-            photo.name = req.body.name;
-            photo.description = req.body.description;
 
-            photo.save();
-        
-            res.status(200).redirect(`/photos/${req.params.id}`);
+        photo.name = req.body.name;
+        photo.description = req.body.description;
+
+        photo.save();
+
+        res.status(200).redirect(`/photos/${req.params.id}`);
 
 
     } catch (error) {
